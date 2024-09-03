@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime 
 from lxml import html 
+import os
 import pandas as pd
 
 
@@ -22,9 +23,22 @@ def fetch_latest_post(url="https://www.jedha.co/blog"):
 
 
 def log_posts(posts):
+    # Define the directory
+    directory = "./posts"
+    
+    # Check if the directory exists, if not, create it
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    # Get the current time
     now = datetime.now()
-    df = pd.DataFrame({"Posts": posts, "Extracted_Date":[now for now in range(len(posts))]})
-    df.to_csv(f"./posts/posts-{now}.csv", index=False)
+    
+    # Create a DataFrame from the posts
+    df = pd.DataFrame({"Posts": posts, "Extracted_Date": [now for _ in range(len(posts))]})
+    
+    # Save the DataFrame to a CSV file in the specified directory
+    df.to_csv(f"{directory}/posts-{now.strftime('%Y-%m-%d_%H-%M-%S')}.csv", index=False)
+    
     return "Logged latest posts"
 
 
