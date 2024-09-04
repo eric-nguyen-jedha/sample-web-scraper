@@ -12,7 +12,6 @@ def test_fetch_latest_post(mock_get):
             <div></div> <!-- div[1] -->
             <div>
                 <div>
-                    <div></div>
                     <div>
                         <div class="h6">Article Title 1</div>
                         <div class="h6">Article Title 2</div>
