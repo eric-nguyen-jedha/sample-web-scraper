@@ -12,6 +12,7 @@ def test_fetch_latest_post(mock_get):
             <div></div> <!-- div[1] -->
             <div>
                 <div>
+                    <div></div>
                     <div>
                         <div class="h6">Article Title 1</div>
                         <div class="h6">Article Title 2</div>
@@ -33,7 +34,7 @@ def test_fetch_latest_post(mock_get):
 @patch("os.makedirs")
 @patch("os.path.exists")
 @patch("pandas.DataFrame.to_csv")
-def test_log_posts(mock_to_csv, mock_exists, mock_makedirs):
+def test_log_posts(mock_to_csv, mock_exists, mock_makedirs):/d
     # Prepare the test data
     posts = ['Article Title 1', 'Article Title 2', 'Article Title 3']
     
