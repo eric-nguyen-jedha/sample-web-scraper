@@ -8,16 +8,11 @@ import pandas as pd
 
 def fetch_latest_post(url="https://www.jedha.co/blog"):
     response = requests.get(url)
-    
-    tree = html.fromstring(response.content)
+    soup = BeautifulSoup(response.content, "html.parser")
 
-    # Latest posts are at: /html/body/div[2]/div/div[2]/div
-    content= tree.xpath("/html/body/div[2]/div/div[2]")
-    
-    for title in content: 
-        title_list=title.xpath(".//*[contains(@class, 'h6')]")  
-        parsed_titles=[title.text_content() for title in title_list]
-    
+    # Récupérer tous les <p> à l'intérieur des balises <article>
+    parsed_titles = [p.get_text(strip=True) for p in soup.select("article p")]
+
     return parsed_titles
 
 
