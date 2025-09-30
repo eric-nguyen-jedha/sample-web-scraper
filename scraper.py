@@ -9,10 +9,11 @@ def fetch_latest_post(url="https://www.jedha.co/blog"):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
 
-    # Tous les titres sont dans des balises avec la classe "h6"
-    parsed_titles = [h.get_text(strip=True) for h in soup.find_all(class_="h6")]
+    # Récupérer tous les <p> à l'intérieur des balises <article>
+    parsed_titles = [p.get_text(strip=True) for p in soup.select("article p")]
 
     return parsed_titles
+
 
 
 def log_posts(posts):
