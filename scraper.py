@@ -1,24 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime 
-from lxml import html 
 import os
 import pandas as pd
 
 
 def fetch_latest_post(url="https://www.jedha.co/blog"):
     response = requests.get(url)
-    tree = html.fromstring(response.content)
+    soup = BeautifulSoup(response.content, "html.parser")
 
-    # Latest posts are at: /html/body/div[2]/div/div[2]
-    content = tree.xpath("/html/body/div[2]/div/div[2]")
-
-    parsed_titles = []  # initialise la liste ici
-    for title in content:
-        title_list = title.xpath(".//*[contains(@class, 'h6')]")
-        parsed_titles.extend([title.text_content() for title in title_list])
+    # Tous les titres sont dans des balises avec la classe "h6"
+    parsed_titles = [h.get_text(strip=True) for h in soup.find_all(class_="h6")]
 
     return parsed_titles
+
 
 def log_posts(posts):
     # Define the directory
@@ -41,7 +36,6 @@ def log_posts(posts):
 
 
 if __name__ == "__main__":
-    
     latest_posts = fetch_latest_post()
     log_posts(latest_posts)
     print(f"Logged {len(latest_posts)} Articles.")
