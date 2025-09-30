@@ -8,19 +8,17 @@ import pandas as pd
 
 def fetch_latest_post(url="https://www.jedha.co/blog"):
     response = requests.get(url)
-    
     tree = html.fromstring(response.content)
 
-    # Latest posts are at: /html/body/div[2]/div/div[2]/div
-    content= tree.xpath("/html/body/div[2]/div/div[2]")
+    # Latest posts are at: /html/body/div[2]/div/div[2]
+    content = tree.xpath("/html/body/div[2]/div/div[2]")
 
-    extract_content=[]
-    for title in content: 
-        title_list=title.xpath(".//*[contains(@class, 'h6')]")    
-        parsed_titles=[title.text_content() for title in title_list]
-    
+    parsed_titles = []  # initialise la liste ici
+    for title in content:
+        title_list = title.xpath(".//*[contains(@class, 'h6')]")
+        parsed_titles.extend([title.text_content() for title in title_list])
+
     return parsed_titles
-
 
 def log_posts(posts):
     # Define the directory
