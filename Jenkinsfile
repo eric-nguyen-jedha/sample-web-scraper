@@ -3,7 +3,11 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'development', url: 'https://github.com/eric-nguyen-jedha/sample-web-scraper.git'
+                script {
+                    deleteDir() // nettoie le workspace avant le clone
+                }
+                git branch: 'development',
+                    url: 'https://github.com/eric-nguyen-jedha/sample-web-scraper.git'
             }
         }
         stage('Build Docker Image') {
@@ -49,7 +53,7 @@ pipeline {
                     body: """<p>Unfortunately, the build <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> has failed.</p>
                              <p>Please check the logs and address the issues.</p>
                              <p>View the details <a href="${env.BUILD_URL}">here</a>.</p>""",
-                    to: 'antoine@jedha.co'
+                    to: 'enguyen.fr@gmail.com@jedha.co'
                 )
             }
         }
