@@ -37,7 +37,7 @@ pipeline {
                     body: """<p>Good news!</p>
                              <p>The build <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> was successful.</p>
                              <p>View the details <a href="${env.BUILD_URL}">here</a>.</p>""",
-                    to: 'antoine@jedha.co'
+                    to: 'enguyen.fr@gmail.com'
                 )
             }
         }
