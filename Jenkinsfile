@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'development', url: 'https://github.com/JedhaBootcamp/sample-web-scraper.git'
+                git branch: 'development', url: 'https://github.com/eric-nguyen-jedha/sample-web-scraper.git'
             }
         }
         stage('Build Docker Image') {
